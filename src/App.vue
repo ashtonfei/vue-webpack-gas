@@ -12,6 +12,7 @@
 import AppHeader from "./components/layout/AppHeader";
 import AppMain from "./components/layout/AppMain";
 import AppFooter from "./components/layout/AppFooter";
+
 export default {
   name: "app",
   components: {
@@ -21,6 +22,9 @@ export default {
   },
   data() {
     return {};
+  },
+  beforeCreate(){
+
   }
 };
 </script>

@@ -3,10 +3,10 @@
 
 # except the extensions…
 !appsscript.json
-!gas/*.gs
-!gas/*.js
-!gas/*.ts
-!gas/*.html
+!**/*.gs
+!**/*.js
+!**/*.ts
+!**/*.html
 
 # ignore even valid files if in…
 .git/**

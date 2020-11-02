@@ -8,6 +8,10 @@
       <v-icon left>{{navLink.icon}}</v-icon>
       {{navLink.name}}
     </v-btn>
+    <v-btn v-if="currentUser" text color="white">
+      <v-icon left>person</v-icon>
+      {{currentUser.email}}
+    </v-btn>
   </v-app-bar>
   <v-navigation-drawer v-model="isDrawerOpen" absolute temporary>
     <v-list-item>
@@ -42,6 +46,7 @@ export default {
     return {
       isDrawerOpen: false,
       group: null,
+      currentUser: null,
       name: "Vue Webpack GAS",
       navLinks: [
         { link: "/", name: "Home", icon: "home" },
@@ -49,6 +54,13 @@ export default {
         { link: "/About", name: "About", icon: "help" }
       ]
     };
+  },
+  beforeCreate(){
+      google.script.run
+        .withSuccessHandler(user=>{
+            this.currentUser = JSON.parse(user)
+        })
+        .getCurrentUser()
   }
 };
 </script>

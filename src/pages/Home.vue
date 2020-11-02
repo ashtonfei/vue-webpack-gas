@@ -8,7 +8,7 @@
                 </v-card-text>
             </v-card>
             
-            <v-card v-for="api in apis" :key="api.name" class="mb-4">
+            <v-card v-for="(api, index) in apis" :key="api.name" class="mb-4">
                 <v-card-title primary-title>
                     <v-icon left>code</v-icon>
                     {{api.name}}
@@ -17,10 +17,16 @@
                     {{api.description}}
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn color="primary" text @click="api.callback">Try API</v-btn>
+                    <v-btn color="primary" text @click="api.callback(index)" :disabled="submitting">Try API</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="secondary" text :href="api.url" target="_blank">Help Doc</v-btn>
                 </v-card-actions>
+                <v-progress-linear
+                    v-if="submitting && apiIndex === index"
+                    color="primary"
+                    indeterminate
+                    rounded
+                ></v-progress-linear>
             </v-card>
         </v-col>
     </v-row>
@@ -37,37 +43,96 @@ import Message from "../components/dialog/Message";
 export default {
   components: { Message },
   methods: {
-    sendEmail() {
+    sendEmail(index) {
       // TODO: use google.script.run api here
-      console.log("Send an email with GmailApp");
-      this.dialog.open = true;
-      this.dialog.title = "Gmail";
-      this.dialog.message = "GmailApp API";
+      this.apiIndex = index
+      this.submitting = true
+      google.script.run
+        .withSuccessHandler((email) => {
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "GmailApp";
+            this.dialog.message = `An email has been sent successfully to email address: ${email}`;
+        })
+        .withFailureHandler((error)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "Error";
+            this.dialog.message = error.message
+        })
+        .sendEmail()
+      
     },
-    createEvent() {
+    createEvent(index) {
       // TODO: use google.script.run api here
-      console.log("Create a all day event with CalendarApp");
-      this.dialog.open = true;
-      this.dialog.title = "Google Calendar";
-      this.dialog.message = "CalendarApp API";
+      this.apiIndex = index
+      this.submitting = true
+      google.script.run
+        .withSuccessHandler((email)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "CalendarApp";
+            this.dialog.message = `An all day event has been created in caleander account: ${email}.`;
+        })
+        .withFailureHandler((error)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "Error";
+            this.dialog.message = error.message
+        })
+        .createEvent()
     },
-    createSheet() {
+    createSheet(index) {
       // TODO: use google.script.run api here
-      console.log("Create a spreadsheet on Google Drive with SpreadsheetApp");
-      this.dialog.open = true;
-      this.dialog.title = "Google Sheet";
-      this.dialog.message = "SpreadsheetApp API";
+      this.apiIndex = index
+      this.submitting = true
+      google.script.run
+        .withSuccessHandler((url)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "CalendarApp";
+            this.dialog.message = `<p>A new spreadsheet has been created on your Google Drive.<br><a href="${url}" target="_blank">Spreadsheet</a></p>.`;
+        })
+        .withFailureHandler((error)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "Error";
+            this.dialog.message = error.message
+        })
+        .createSheet()
     },
-    createFile() {
+    createFile(index) {
       // TODO: use google.script.run api here
-      console.log("Create a file on Google Drive with DriveApp");
-      this.dialog.open = true;
-      this.dialog.title = "Google Drive";
-      this.dialog.message = "DriveApp API";
+      this.apiIndex = index
+      this.submitting = true
+      google.script.run
+        .withSuccessHandler((url)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "CalendarApp";
+            this.dialog.message = `<p>A new file has been created on your Google Drive.<br><a href="${url}" target="_blank">File</a></p>.`;
+        })
+        .withFailureHandler((error)=>{
+            this.apiIndex = null
+            this.submitting = false
+            this.dialog.open = true;
+            this.dialog.title = "Error";
+            this.dialog.message = error.message
+        })
+        .createFile()
     }
   },
   data() {
     return {
+        submitting: false,
+        apiIndex: null,
       dialog: {
         open: false,
         title: "Message",
@@ -79,8 +144,8 @@ export default {
           description: "Send an email with GmailApp API.",
           url:
             "https://developers.google.com/apps-script/reference/gmail/gmail-app",
-          callback: () => {
-            this.sendEmail();
+          callback: (index) => {
+            this.sendEmail(index);
           }
         },
         {
@@ -88,8 +153,8 @@ export default {
           description: "Create a all day event with Calendar API.",
           url:
             "https://developers.google.com/apps-script/reference/calendar/calendar-app",
-          callback: () => {
-            this.createEvent();
+          callback: (index) => {
+            this.createEvent(index);
           }
         },
         {
@@ -98,8 +163,8 @@ export default {
             "Get the spreadsheet name from a url with SpreadsheetAPI.",
           url:
             "https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app",
-          callback: () => {
-            this.createSheet();
+          callback: (index) => {
+            this.createSheet(index);
           }
         },
         {
@@ -107,8 +172,8 @@ export default {
           description: "Create a file on your Google Drive",
           url:
             "https://developers.google.com/apps-script/reference/drive/drive-app",
-          callback: () => {
-            this.createFile();
+          callback: (index) => {
+            this.createFile(index);
           }
         }
       ]
