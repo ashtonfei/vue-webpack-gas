@@ -1,52 +1,58 @@
 <template>
-  <v-row>
-    <v-col></v-col>
-    <v-col sm12 md8 lg6>
-      <h1>{{title}}</h1>
-      <v-form
-        ref="form"
-        v-model="valid"
-        lazy-validation
-        @submit.prevent="submit"
-      >
-        <div v-for="item in items" :key="item.label">
-          <v-text-field
-            v-if=" item.type === 'input' "
-            v-model="item.value"
-            :rules="item.rules"
-            :label="item.label"
-            :required="item.required"
-            outlined
-          ></v-text-field>
-          <v-textarea
-            v-else-if=" item.type === 'textarea' "
-            v-model="item.value"
-            :rules="item.rules"
-            :label="item.label"
-            :required="item.required"
-            outlined
-          ></v-textarea>
-          <v-select
-            v-else-if=" item.type === 'select' "
-            v-model="item.value"
-            :items="item.options"
-            :rules="item.rules"
-            :label="item.label"
-            :required="item.required"
-            :multiple="item.multiple"
-            outlined
-          ></v-select>
-        </div>
-        <v-btn
-          :disabled="!valid"
-          color="primary"
-          type="submit"
-        >
-          Submit
-        </v-btn>
-      </v-form>
+  <v-row justify="center">
+    <v-col cols="12" sm="12" md="8" lg="6">
+      <v-card>
+        <v-card-title>
+          <h2 class="mb-4 primary--text">{{title}}</h2>
+        </v-card-title>
+        <v-card-text>
+          <v-form ref="form"
+            v-model="valid"
+            lazy-validation>
+            <div v-for="item in items" :key="item.label">
+              <v-text-field
+                v-if=" item.type === 'input' "
+                v-model="item.value"
+                :rules="item.rules"
+                :label="item.label"
+                :required="item.required"
+                outlined
+              ></v-text-field>
+              <v-textarea
+                v-else-if=" item.type === 'textarea' "
+                v-model="item.value"
+                :rules="item.rules"
+                :label="item.label"
+                :required="item.required"
+                outlined
+              ></v-textarea>
+              <v-select
+                v-else-if=" item.type === 'select' "
+                v-model="item.value"
+                :items="item.options"
+                :rules="item.rules"
+                :label="item.label"
+                :required="item.required"
+                :multiple="item.multiple"
+                outlined
+              ></v-select>
+            </div>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn
+            color="primary"
+            :disabled="!valid"
+            text
+            @click.prevent="submit"
+          >
+            Submit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+
     </v-col>
-    <v-col></v-col>
   </v-row>
 </template>
 
@@ -96,7 +102,7 @@ export default {
         type: "select",
         label: "Webdev Tools (Multiple)",
         value: [],
-        rules: [v => !!v || "Item is required"],
+        rules: [v => !!v.length || "Item is required"],
         required: true,
         options: [
           "Vue JS",

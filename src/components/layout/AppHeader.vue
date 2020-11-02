@@ -2,7 +2,7 @@
   <div>
   <v-app-bar color="primary white--text" flat>
     <v-app-bar-nav-icon @click="isDrawerOpen = !isDrawerOpen" class="white--text"></v-app-bar-nav-icon>
-    <v-toolbar-title>{{name}}</v-toolbar-title>
+    <v-toolbar-title to="/">{{name}}</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn v-for="navLink in navLinks" :key="navLink.link" :to="navLink.link" depressed color="primary">
       <v-icon left>{{navLink.icon}}</v-icon>
@@ -42,8 +42,9 @@ export default {
     return {
       isDrawerOpen: false,
       group: null,
-      name: "Vue Playground",
+      name: "Vue Webpack GAS",
       navLinks: [
+        { link: "/", name: "Home", icon: "home" },
         { link: "/form", name: "Form", icon: "view_list" },
         { link: "/About", name: "About", icon: "help" }
       ]
