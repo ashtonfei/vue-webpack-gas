@@ -10,6 +10,7 @@
             
             <v-card v-for="api in apis" :key="api.name" class="mb-4">
                 <v-card-title primary-title>
+                    <v-icon left>code</v-icon>
                     {{api.name}}
                 </v-card-title>
                 <v-card-text>
@@ -23,39 +24,55 @@
             </v-card>
         </v-col>
     </v-row>
-    <v-row justify="center">
-        <v-dialog
-            v-model="dialog"
-            persistent
-            max-width="290"
-            >
-            <v-card>
-                <v-card-title class="headline">
-                Message
-                </v-card-title>
-                <v-card-text>{{dialogContent}}</v-card-text>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="dialog = false"
-                >
-                    OKAY
-                </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-row>
+    <Message 
+        :title="dialog.title" 
+        :message="dialog.message" 
+        v-if="dialog.open" 
+        @close-dialog="dialog.open = false"/>
     </div>
 </template>
 
 <script>
+import Message from "../components/dialog/Message";
 export default {
+  components: { Message },
+  methods: {
+    sendEmail() {
+      // TODO: use google.script.run api here
+      console.log("Send an email with GmailApp");
+      this.dialog.open = true;
+      this.dialog.title = "Gmail";
+      this.dialog.message = "GmailApp API";
+    },
+    createEvent() {
+      // TODO: use google.script.run api here
+      console.log("Create a all day event with CalendarApp");
+      this.dialog.open = true;
+      this.dialog.title = "Google Calendar";
+      this.dialog.message = "CalendarApp API";
+    },
+    createSheet() {
+      // TODO: use google.script.run api here
+      console.log("Create a spreadsheet on Google Drive with SpreadsheetApp");
+      this.dialog.open = true;
+      this.dialog.title = "Google Sheet";
+      this.dialog.message = "SpreadsheetApp API";
+    },
+    createFile() {
+      // TODO: use google.script.run api here
+      console.log("Create a file on Google Drive with DriveApp");
+      this.dialog.open = true;
+      this.dialog.title = "Google Drive";
+      this.dialog.message = "DriveApp API";
+    }
+  },
   data() {
     return {
-      dialog: false,
-      dialogContent: null,
+      dialog: {
+        open: false,
+        title: "Message",
+        message: null
+      },
       apis: [
         {
           name: "GmailApp",
@@ -63,9 +80,7 @@ export default {
           url:
             "https://developers.google.com/apps-script/reference/gmail/gmail-app",
           callback: () => {
-            console.log("GmailApp");
-            this.dialog = true;
-            this.dialogContent = "GmailApp";
+            this.sendEmail();
           }
         },
         {
@@ -74,9 +89,7 @@ export default {
           url:
             "https://developers.google.com/apps-script/reference/calendar/calendar-app",
           callback: () => {
-            console.log("CalendarApp");
-            this.dialog = true;
-            this.dialogContent = "CalendarApp";
+            this.createEvent();
           }
         },
         {
@@ -86,9 +99,7 @@ export default {
           url:
             "https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app",
           callback: () => {
-            console.log("SpreadsheetApp");
-            this.dialog = true;
-            this.dialogContent = "SpreadsheetApp";
+            this.createSheet();
           }
         },
         {
@@ -97,9 +108,7 @@ export default {
           url:
             "https://developers.google.com/apps-script/reference/drive/drive-app",
           callback: () => {
-            console.log("DriveApp");
-            this.dialog = true;
-            this.dialogContent = "DriveApp";
+            this.createFile();
           }
         }
       ]

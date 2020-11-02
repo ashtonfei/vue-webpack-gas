@@ -4,7 +4,7 @@
     <v-app-bar-nav-icon @click="isDrawerOpen = !isDrawerOpen" class="white--text"></v-app-bar-nav-icon>
     <v-toolbar-title to="/">{{name}}</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn v-for="navLink in navLinks" :key="navLink.link" :to="navLink.link" depressed color="primary">
+    <v-btn v-for="navLink in navLinks" :key="navLink.link" :to="navLink.link" text color="white">
       <v-icon left>{{navLink.icon}}</v-icon>
       {{navLink.name}}
     </v-btn>
