@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center">
-        <v-col cols="12" sm="12" md="8" lg="6">
-            <h1 class="text-center">About Page</h1>
+        <v-col cols="12" sm="12" md="10" lg="8">
+            <h1 class="text-center">Contacts</h1>
             <v-simple-table>
             <template v-slot:default>
             <thead>
@@ -47,13 +47,19 @@ export default {
           description:
             "Check my YouTube channel for Google Apps Script projects.",
           link: "https://www.youtube.com/ashtonfei/",
-          icon: "slideshow"
+          icon: "mdi-youtube"
         },
         {
           name: "Twitter",
           description: "Ping me on Twitter",
           link: "https://www.twitter.com/ashton_fei/",
-          icon: "alternate_email"
+          icon: "mdi-twitter"
+        },
+        {
+          name: "Instagram",
+          description: "Ping me on Instagram",
+          link: "https://www.instagram.com/ashton.fei/",
+          icon: "mdi-instagram"
         },
         {
           name: "Gmail",
@@ -61,14 +67,21 @@ export default {
             "Send me an email anytime when you need support on Google Apps Script",
           link:
             "mailto:yunjia.fei@gmail.com?subject=Google%20Apps%20Script%20Support",
-          icon: "mail"
+          icon: "mdi-gmail"
         },
         {
           name: "Code Support Request",
           description:
             "You can also submit a code support request with this Google Form.",
           link: "https://forms.gle/ApjVvQocFFGrCJzdA",
-          icon: "support_agent"
+          icon: "mdi-help-box"
+        },
+        {
+          name: "Github",
+          description:
+            "Check the source code on Github.",
+          link: "https://www.github.com/ashtonfei/",
+          icon: "mdi-git"
         }
       ]
     };

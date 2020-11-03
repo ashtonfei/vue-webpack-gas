@@ -1,7 +1,7 @@
 <template>
     <div>
     <v-row justify="center">
-        <v-col cols="12" sm="12" md="8" lg="6">
+        <v-col cols="12" sm="12" md="10" lg="8">
             <v-card class="mb-4">
                 <v-card-text>
                     <h1 class="text-center primary--text">Google Apps Script APIs Demo</h1> 
@@ -10,7 +10,7 @@
             
             <v-card v-for="(api, index) in apis" :key="api.name" class="mb-4">
                 <v-card-title primary-title>
-                    <v-icon left>code</v-icon>
+                    <v-icon left>{{api.icon}}</v-icon>
                     {{api.name}}
                 </v-card-title>
                 <v-card-text>
@@ -141,6 +141,7 @@ export default {
       apis: [
         {
           name: "GmailApp",
+          icon: "mdi-gmail",
           description: "Send an email with GmailApp API.",
           url:
             "https://developers.google.com/apps-script/reference/gmail/gmail-app",
@@ -150,6 +151,7 @@ export default {
         },
         {
           name: "CalendarApp",
+          icon: "mdi-calendar",
           description: "Create a all day event with Calendar API.",
           url:
             "https://developers.google.com/apps-script/reference/calendar/calendar-app",
@@ -159,6 +161,7 @@ export default {
         },
         {
           name: "SpreadsheetApp",
+          icon: "mdi-google-spreadsheet",
           description:
             "Get the spreadsheet name from a url with SpreadsheetAPI.",
           url:
@@ -169,6 +172,7 @@ export default {
         },
         {
           name: "DriveApp",
+          icon: "mdi-google-drive",
           description: "Create a file on your Google Drive",
           url:
             "https://developers.google.com/apps-script/reference/drive/drive-app",

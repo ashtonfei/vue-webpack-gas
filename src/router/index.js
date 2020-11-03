@@ -5,22 +5,22 @@ Vue.use(VueRouter)
 
 import Home from "../pages/Home"
 import Form from "../pages/Form"
-import About from "../pages/About"
+import Contacts from "../pages/Contacts"
 
 const routes = [{
     path: "/",
     component: Home
-  },
-  {
+},
+{
     path: "/form",
     component: Form
-  },
-  {
-    path: "/About",
-    component: About
-  }
+},
+{
+    path: "/contacts",
+    component: Contacts
+}
 ]
 
 export default new VueRouter({
-  routes
+    routes
 })

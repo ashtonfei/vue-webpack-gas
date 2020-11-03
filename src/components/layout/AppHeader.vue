@@ -1,15 +1,15 @@
 <template>
   <div>
-  <v-app-bar color="primary white--text" flat>
-    <v-app-bar-nav-icon @click="isDrawerOpen = !isDrawerOpen" class="white--text"></v-app-bar-nav-icon>
+  <v-app-bar color="primary" app dark flat>
+    <v-app-bar-nav-icon @click="isDrawerOpen = !isDrawerOpen" class="hidden-md-and-up" ></v-app-bar-nav-icon>
     <v-toolbar-title to="/">{{name}}</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn v-for="navLink in navLinks" :key="navLink.link" :to="navLink.link" text color="white">
+    <v-btn v-for="navLink in navLinks" :key="navLink.link" :to="navLink.link" text class="hidden-sm-and-down">
       <v-icon left>{{navLink.icon}}</v-icon>
       {{navLink.name}}
     </v-btn>
-    <v-btn v-if="currentUser" text color="white">
-      <v-icon left>person</v-icon>
+    <v-btn v-if="currentUser" text>
+      <v-icon left>mdi-account-box</v-icon>
       {{currentUser.email}}
     </v-btn>
   </v-app-bar>
@@ -33,6 +33,12 @@
           </v-list-item-icon>
           <v-list-item-title>{{navLink.name}}</v-list-item-title>
         </v-list-item>
+        <v-list-item v-if="currentUser">
+          <v-list-item-icon>
+            <v-icon>mdi-account-box</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>{{currentUser.email}}</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
@@ -49,9 +55,9 @@ export default {
       currentUser: null,
       name: "Vue Webpack GAS",
       navLinks: [
-        { link: "/", name: "Home", icon: "home" },
-        { link: "/form", name: "Form", icon: "view_list" },
-        { link: "/About", name: "About", icon: "help" }
+        { link: "/", name: "Home", icon: "mdi-home" },
+        { link: "/form", name: "Form", icon: "mdi-view-list" },
+        { link: "/contacts", name: "Contacts", icon: "mdi-contacts" }
       ]
     };
   },
